@@ -123,7 +123,7 @@ class HuffmanCoding:
 			padded_encoded_text = self.pad_encoded_text(encoded_text)
 
 			b = self.get_byte_array(padded_encoded_text)
-			print(padded_encoded_text)
+			print(bytes(b))
 			output.write(bytes(b))
 
 		print("Compressed")
@@ -156,25 +156,24 @@ class HuffmanCoding:
 		return decoded_text
 
 
-	def decompress(self, input_path):
-		filename, file_extension = os.path.splitext(self.path)
-		output_path = filename + "_decompressed" + ".txt"
+	def decompress(self, input_data):
+		if isinstance(input_data, bytes):
+			# If the input is a byte array
+			byte_array = input_data
+		else:
+			# If the input is a file path
+			with open(input_data, 'rb') as file:
+				byte_array = file.read()
 
-		with open(input_path, 'rb') as file, open(output_path, 'w') as output:
-			bit_string = ""
+		bit_string = ""
 
-			byte = file.read(1)
-			while(len(byte) > 0):
-				byte = ord(byte)
-				bits = bin(byte)[2:].rjust(8, '0')
-				bit_string += bits
-				byte = file.read(1)
+		for byte in byte_array:
+			bits = bin(byte)[2:].rjust(8, '0')
+			bit_string += bits
+		
 
-			encoded_text = self.remove_padding(bit_string)
-
-			decompressed_text = self.decode_text(encoded_text)
-			
-			output.write(decompressed_text)
-
-		print("Decompressed")
-		return output_path
+		encoded_text = self.remove_padding(bit_string)
+		print(encoded_text)
+		decompressed_text = self.decode_text(encoded_text)
+		
+		return decompressed_text

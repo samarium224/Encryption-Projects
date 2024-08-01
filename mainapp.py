@@ -1,96 +1,97 @@
-import random
-import string
-
-# Define the character set
-char = " " + string.punctuation + string.digits + string.ascii_letters
-char = list(char)
-key = char.copy()
-# word library
-
-word_library = {
-    '00000': "Hi.",
-    '00001': "What are you doing?",
-    '00010': "You forgot?",
-    '00011': "Feeling good?",
-    '00100': "Be happy.",
-    '00101': "Call me.",
-    '00110': "Check this.",
-    '00111': "Do that.",
-    '01000': "Email me.",
-    '01001': "Forget it.",
-    '01010': "Get ready.",
-    '01011': "Have fun.",
-    '01100': "Help me.",
-    '01101': "Join us.",
-    '01110': "Keep calm.",
-    '01111': "Let me know.",
-    '10000': "Love you.",
-    '10001': "Meet me.",
-    '10010': "Never mind.",
-    '10011': "Okay, sure.",
-    '10100': "Perfect day.",
-    '10101': "Quick check.",
-    '10110': "Relax now.",
-    '10111': "See you.",
-    '11000': "Take care.",
-    '11001': "Try again.",
-    '11010': "Update me.",
-    '11011': "Very good.",
-    '11100': "Well done.",
-    '11101': "Yes, please.",
-    '11110': "Zoom in.",
-    '11111': "Absolutely.",
-    # Add more entries as needed until all binary strings up to '11111'
-}
-
-# Generate a random key
-ENCRYPTION_KEY = random.randint(2024, 12024)
-ENCRYPTION_KEY = 224
-random.seed(ENCRYPTION_KEY)
-random.shuffle(key)
-
-# Encryption Function
-def Encrypt_msg(text, encryption_key = 224):
-    plain_text = text
-    cipher_text = ""
-    meaningful_sentence = ""
-
-    for letter in plain_text:
-        index = char.index(letter)
-        cipher_text += key[index]
-
-    for encodedLetter in cipher_text:
-        keyIndex = key.index(encodedLetter)
-        meaningful_sentence += word_library[keyIndex]
-
-    return meaningful_sentence
-
-# Decryption Function
-def Decrypt_msg(encrypted_text_, encryption_key = 224):
-
-    # Decrypt
-    encrypted_wordbox = encrypted_text_.split('.')
-    decrypted_text = []
-
-    for sentense in encrypted_wordbox: 
-        value = {i for i in word_library if word_library[i] == sentense}
-        print(value)
-
-    final_message = encrypted_wordbox
-
-    return final_message
-
-while True:
-    print("1. Encode")
-    print("2. Decode")
-    option = input("Enter your choice: ")
-
-    if option == "1":
-        plain_text = input("Enter your text: ")
-        encoded_text = Encrypt_msg(plain_text)
-        print(encoded_text)
-
-    if option == "2":
-        encoded_text = input("Enter text to decode: ")
-        decoded_text = Decrypt_msg(encoded_text)
-        print(decoded_text)
+banglish_sentences_key = [
+    "Ami kal office jabo",
+    "Tumi ajke bhalo lagchho na",
+    "Ekhane boro ekta park ache",
+    "Aaj shundor diner dharona",
+    "Amar ekta notun laptop aache",
+    "Ekhane onek sundor jinish ache",
+    "Ami kal tomar sathe katha bolbo",
+    "Eita amar favorite song",
+    "Aaj amader party ache",
+    "Amar bondhu bhalo kichu korche",
+    "Kichu kintu bhalo lagche na",
+    "Ami ekhon busy achi",
+    "Kothay je chhilo shey aaj dekha holo na",
+    "Amar book ta pailam",
+    "Aaj tomar mood bhalo lagchhe",
+    "Oi restaurant e khub bhalo khawa jay",
+    "Ekhane onek boro boro building ache",
+    "Ami ekhon boro ekta project er upor kaj korchi",
+    "Amader chhuti hoye geche",
+    "Kichu notun seekhar iccha ache",
+    "Ami tomake khub miss kortesi",
+    "Shei girl ta onek bhalo gaay",
+    "Ekhane boro ekta stadium ache",
+    "Aami ekta chotto gift kinechi",
+    "Eita ekta interesting book",
+    "Ami aajkal onek chinta kortesi",
+    "Ami ekta boro meeting ache",
+    "Oi cheleta khub helpful",
+    "Aaj amar mood bhalo na",
+    "Amader chhobi ta khub sundor",
+    "Ekhane ekta boro bazaar ache",
+    "Aaj amar ekta important kaj ache",
+    "Ami ekta notun recipe try korbo",
+    "Shei din ta ekdom bhule jaabo na",
+    "Amar phone ta bhule geche",
+    "Aaj kal onek busy din chalche",
+    "Ekhane onek nice café ache",
+    "Ami ekta notun song shunlam",
+    "Ekhane ekta chotto park ache",
+    "Ami aaj kichu alada korbo",
+    "Amar ekta boro plan ache",
+    "Aajkal weather kemon",
+    "Ekhane ekta sundor lake ache",
+    "Ami ekta new gadget kinechi",
+    "Shei din ta khub special chilo",
+    "Aajkal kichu bhalo lagche na",
+    "Amar friend ta khub bhalo",
+    "Ekhane onek nice place ache",
+    "Ami ekta new book peye gechi",
+    "Aaj amar mood khub bhalo",
+    "Oi restaurant ta khub popular",
+    "Ami ekta chotto project korchi",
+    "Ekhane onek shopping mall ache",
+    "Aaj amader chhuti",
+    "Amar kachhe ekta idea ache",
+    "Shei boy ta khub interesting",
+    "Aajkal onek boro kaj ache",
+    "Amar ekta surprise ache",
+    "Ekhane boro ekta amusement park ache",
+    "Ami ekta boro project er upor kaj korchi",
+    "Aaj amar chinta khub beshi",
+    "Shei cheleta khub helpful",
+    "Ekhane onek sundor place ache",
+    "Ami ekta boro plan banachhi",
+    "Aajkal amar mood khub bhalo",
+    "Amar phone ta khuje paitesilam",
+    "Ekhane ekta sundor garden ache",
+    "Ami ekta notun course shuru kortesi",
+    "Aaj amader dinner outside hobe",
+    "Shei book ta khub interesting",
+    "Ami ekhon ekta project e busy achi",
+    "Ami ekta chotto plan banalam",
+    "Ekhane boro ekta library ache",
+    "Aaj amader khub bhalo time chilo",
+    "Tumi ajke ekdom shant lagchho",
+    "Amader ekta boro outing ache",
+    "Ami ekta boro gadget peye gechi",
+    "Shei din ta ekdom bhule jaabo na",
+    "Aaj amader boro plan chilo",
+    "Tumi ajke khub sundor lagchho",
+    "Amader ekta surprise party hobe",
+    "Ami ekta new book peye gechi",
+    "Ekhane ekta sundor park ache",
+    "Aaj amader dinner ta khub special chilo",
+    "Amar kachhe ekta boro idea ache",
+    "Ami ekta new course shuru kortesi",
+    "Aaj amader ekta special meeting chilo",
+    "Ekhane onek nice place ache",
+    "Tumi ajke bhalo lagchho na",
+    "Ami ekta interesting song shunlam",
+    "Aaj amader ekta boro outing chilo",
+    "Shei book ta khub interesting",
+    "ami ekhon gosol e jabo",
+    "kobe thik hobe tomar basar obostha janaiyo",
+    "biral ta onk cute"
+]

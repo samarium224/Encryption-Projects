@@ -1,12 +1,11 @@
 import random
 import string
+from mainapp import banglish_sentences_key as key
 
 # Define the character set
 char = " " + string.punctuation + string.digits + string.ascii_letters
 char = list(char)
-key = char.copy()
-# word library
-
+print(len(key))
 # Generate a random key
 ENCRYPTION_KEY = random.randint(2024, 12024)
 ENCRYPTION_KEY = 518
@@ -20,7 +19,7 @@ def Encrypt_msg(text):
 
     for letter in plain_text:
         index = char.index(letter)
-        cipher_text += key[index]
+        cipher_text += key[index] + '.'
 
     return cipher_text
 
@@ -28,10 +27,12 @@ def Encrypt_msg(text):
 def Decrypt_msg(encrypted_text_):
 
     # Decrypt
-    text_to_decode = encrypted_text_
+    text_to_decode = encrypted_text_.split('.')
     final_message = ""
 
     for letter in text_to_decode:
+        if letter == '':
+            continue
         index = key.index(letter)
         final_message += char[index]
 
