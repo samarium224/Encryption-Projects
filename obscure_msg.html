@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text Encoder/Decoder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text Encoder/Decoder</h1>
+    <div class="container">
+        <div>
+            <h2>Set Encryption Key</h2>
+            <input type="text" id="encryptionKey" placeholder="Enter encryption key (number)">
+            <button onclick="setEncryptionKey()">Set Key</button>
+        </div>
+        <div>
+            <h2>Encode</h2>
+            <input type="text" id="plainText" placeholder="Enter text to encode">
+            <button onclick="encodeText()">Encode</button>
+            <p class="result" id="encodedText"></p>
+        </div>
+        <div>
+            <h2>Decode</h2>
+            <input type="text" id="encodedInput" placeholder="Enter text to decode">
+            <button onclick="decodeText()">Decode</button>
+            <p class="result" id="decodedText"></p>
+        </div>
+    </div>
+
+    <script>
+        const char = " " + '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~' + "0123456789" + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        const key = char.split('');
+        let ENCRYPTION_KEY = 518;
+        let shuffledKey = initializeKey();
+
+        function seedRandom(seed) {
+            let x = Math.sin(seed) * 10000;
+            return x - Math.floor(x);
+        }
+
+        function shuffle(array, seed) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(seedRandom(seed++) * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function initializeKey() {
+            const keyCopy = key.slice();
+            return shuffle(keyCopy, ENCRYPTION_KEY);
+        }
+
+        function setEncryptionKey() {
+            const keyInput = document.getElementById('encryptionKey').value;
+            const parsedKey = parseInt(keyInput);
+            if (!isNaN(parsedKey)) {
+                ENCRYPTION_KEY = parsedKey;
+                shuffledKey = initializeKey();
+                alert('Encryption key set successfully!');
+            } else {
+                alert('Please enter a valid number for the encryption key.');
+            }
+        }
+
+        function encodeText() {
+            const plainText = document.getElementById('plainText').value;
+            let cipherText = '';
+            for (let letter of plainText) {
+                const index = char.indexOf(letter);
+                cipherText += shuffledKey[index];
+            }
+            document.getElementById('encodedText').textContent = cipherText;
+        }
+
+        function decodeText() {
+            const encodedText = document.getElementById('encodedInput').value;
+            let decodedText = '';
+            for (let letter of encodedText) {
+                const index = shuffledKey.indexOf(letter);
+                decodedText += char[index];
+            }
+            document.getElementById('decodedText').textContent = decodedText;
+        }
+    </script>
+</body>
+</html>
